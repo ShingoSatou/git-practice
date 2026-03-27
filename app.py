@@ -17,7 +17,13 @@ def multiply(a: int, b: int) -> int:
     return a * b
 
 
+def subtract(a: int, b: int) -> int:
+    """2つの数値を引く（a から b を引く）"""
+    return a - b
+
+
 if __name__ == "__main__":
     print(greet("太郎"))
     print(f"1 + 2 = {add(1, 2)}")
     print(f"3 × 4 = {multiply(3, 4)}")
+    print(f"5 - 3 = {subtract(5, 3)}")
