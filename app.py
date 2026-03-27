@@ -4,7 +4,7 @@
 
 def greet(name: str) -> str:
     """挨拶メッセージを返す"""
-    return f"こんにちは、{name}さん！"
+    return f"おはようございます、{name}さん！"
 
 
 def add(a: int, b: int) -> int:
