@@ -22,6 +22,13 @@ def subtract(a: int, b: int) -> int:
     return a - b
 
 
+def divide(a: int, b: int) -> float:
+    """2つの数値を割る"""
+    if b == 0:
+        raise ValueError("0で割ることはできません")
+    return a / b
+
+
 if __name__ == "__main__":
     print(greet("太郎"))
     print(f"1 + 2 = {add(1, 2)}")
