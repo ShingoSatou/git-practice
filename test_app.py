@@ -1,11 +1,11 @@
 # === app.py のテスト ===
 # GitHub Actions（CI）演習で、自動テストとして実行します。
 
-from app import greet, add, multiply
+from app import greet, add, multiply, subtract, divide
 
 
 def test_greet():
-    assert greet("太郎") == "こんにちは、太郎さん！"
+    assert greet("太郎") == "やあ、太郎さん！おはよう！"
 
 
 def test_add():
@@ -20,8 +20,27 @@ def test_multiply():
     assert multiply(-2, 3) == -6
 
 
+def test_subtract():
+    assert subtract(5, 3) == 2
+    assert subtract(0, 0) == 0
+    assert subtract(1, 5) == -4
+
+
+def test_divide():
+    assert divide(10, 2) == 5.0
+    assert divide(7, 2) == 3.5
+    # ゼロ除算のテスト
+    try:
+        divide(1, 0)
+        assert False, "ValueErrorが発生するはず"
+    except ValueError:
+        pass  # 期待通り
+
+
 if __name__ == "__main__":
     test_greet()
     test_add()
     test_multiply()
+    test_subtract()
+    test_divide()
     print("全テスト合格！✅")

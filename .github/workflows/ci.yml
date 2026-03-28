@@ -1,0 +1,30 @@
+# CI ワークフロー — push や PR のたびにテストを自動実行する
+name: CI
+
+# いつ実行するか（トリガー）
+on:
+  push:
+    branches: [main]       # main への push 時に実行
+  pull_request:
+    branches: [main]       # main への PR 作成時に実行
+
+# 何を実行するか
+jobs:
+  test:
+    name: テスト実行
+    runs-on: ubuntu-latest   # Ubuntu（Linux）のマシンで実行
+
+    steps:
+      # ① リポジトリのコードをチェックアウト（ダウンロード）
+      - name: コードをチェックアウト
+        uses: actions/checkout@v4
+
+      # ② Python をセットアップ
+      - name: Python をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # ③ テストを実行
+      - name: テストを実行
+        run: python test_app.py
