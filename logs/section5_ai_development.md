@@ -3,7 +3,7 @@
 ## 目次
 
 - [Step 13: GitHub CLI (`gh`)](#step-13-github-cli-gh)（完了）
-- [Step 14: `git bisect` バグ探し](#step-14-git-bisect-バグ探し)（未着手）
+- [Step 14: `git bisect` バグ探し](#step-14-git-bisect-バグ探し)（完了）
 
 ---
 
@@ -63,4 +63,39 @@ A: AI ツールがコマンドを使ってターミナルだけで GitHub 操作
 
 ## Step 14: `git bisect` バグ探し
 
-（未着手 — 後のステップで学習予定）
+### 概要
+
+`git bisect` は、**どのコミットでバグが混入したかを二分探索で特定する**コマンド。100 コミットでも最大 7 回のテストで原因コミットを見つけられる。
+
+### 使い方
+
+```bash
+git bisect start           # 開始
+git bisect bad             # 今のコミットは「バグあり」
+git bisect good <commit>   # このコミットは「バグなし」
+# → Git が中間コミットをチェックアウト → テストして good/bad を判定 → 繰り返し
+git bisect reset           # 終了、元のブランチに戻る
+```
+
+### 自動モード（`git bisect run`）
+
+テストスクリプトを渡して自動判定できる。
+
+```bash
+git bisect start
+git bisect bad HEAD
+git bisect good <commit>
+git bisect run <テストコマンド>
+```
+
+テスト成功（exit 0）→ good、失敗（exit 1）→ bad と自動判定。
+
+### 実践
+
+- `feature/bisect-practice` ブランチで演習
+- 4つのコミットを作成し、3つ目で `add` 関数にバグを混入（`a + b` → `a - b`）
+- `git bisect` で 3 回のテストでバグ混入コミット `d66aee4 refactor: add関数を整理` を特定
+
+### AI駆動開発での位置づけ
+
+`git bisect run` でテストを自動実行させれば、AI がバグ混入コミットの特定まで自動で行える。大規模プロジェクトで特に有効。
