@@ -42,6 +42,23 @@ gh pr list --json number,title --jq '.[].title'
 
 `gh` は AI 駆動開発の要。AI ツールが PR 作成・Issue 管理・CI 確認・リリースをすべてターミナルから実行できる。
 
+### Q&A
+
+**Q: `gh pr list` の結果を JSON で取得し、タイトルだけ抽出するには？**
+
+A: `--json` と `--jq` フラグを組み合わせる。
+```bash
+gh pr list --json number,title --jq '.[].title'
+```
+
+**Q: ターミナルから Issue を作成するコマンドは？**
+
+A: `gh issue create`。`--title` と `--body` で内容を指定できる。
+
+**Q: `gh` が AI 駆動開発で重要な理由は？**
+
+A: AI ツールがコマンドを使ってターミナルだけで GitHub 操作を完結できるから。ブラウザ不要で PR 作成・Issue 管理・リリースなどが可能。
+
 ---
 
 ## Step 14: `git bisect` バグ探し
