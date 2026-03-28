@@ -2,8 +2,8 @@
 
 ## 目次
 
-- [Step 10: ブランチ保護ルール](#step-10-ブランチ保護ルール)（未着手）
-- [Step 11: Pull Request のベストプラクティス](#step-11-pull-request-のベストプラクティス)（未着手）
+- [Step 10: ブランチ保護ルール](#step-10-ブランチ保護ルール)（完了）
+- [Step 11: PR / Issue テンプレート](#step-11-pr--issue-テンプレート)（完了）
 
 ---
 
@@ -33,6 +33,38 @@ main ブランチに「保護ルール」を設定し、壊れないように守
 
 ---
 
-## Step 11: Pull Request のベストプラクティス
+## Step 11: PR / Issue テンプレート
 
-（未着手 — 後のステップで学習予定）
+### 概要
+
+GitHub では、PR や Issue の作成時に**テンプレート**を用意できる。テンプレートがあると、書くべき情報の抜け漏れが減り、チーム全体で統一されたフォーマットになる。
+
+### テンプレートの配置場所
+
+| テンプレート | パス |
+|------------|------|
+| PR テンプレート | `.github/pull_request_template.md` |
+| Issue テンプレート（単一） | `.github/ISSUE_TEMPLATE.md` |
+| Issue テンプレート（複数） | `.github/ISSUE_TEMPLATE/*.md` |
+
+### 実践で作成したファイル
+
+```
+.github/
+├── ISSUE_TEMPLATE/
+│   ├── bug_report.md        ← バグ報告テンプレート
+│   └── feature_request.md   ← 機能要望テンプレート
+├── pull_request_template.md ← PR テンプレート
+└── workflows/
+    └── ci.yml               ← CI（既存）
+```
+
+### ポイント
+
+- Issue テンプレートの **frontmatter**（`---` で囲まれた部分）で `name`, `about`, `labels` を指定 → 作成時の選択画面に表示される
+- テンプレートは **main ブランチにマージされて初めて** GitHub 上で有効になる
+- `gh pr create` でも PR テンプレートが自動適用される
+
+### AI駆動開発での位置づけ
+
+AI に PR を作らせるときも、テンプレートがあれば統一されたフォーマットで出力される。人間・AI 問わず品質が揃う。
