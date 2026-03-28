@@ -88,3 +88,17 @@ GIT_SEQUENCE_EDITOR=true git rebase --autosquash <起点>
 ### AI駆動開発での位置づけ
 
 AI は `git log` / `git blame` で履歴を読むため、きれいな履歴だと正確にコンテキストを把握できる。`git bisect` の精度も向上する。
+
+### Q&A
+
+**Q: `--no-verify` の意味は？**
+
+A: `git commit --no-verify` は pre-commit フック（自動チェック）をスキップするオプション。本来は使わないのが正しい運用で、フック失敗時は原因を修正すべき。
+
+**Q: fixup は対象コミットの後にコミットがあっても有効か？**
+
+A: 有効。`rebase --autosquash` が fixup コミットを対象コミットの直後に自動移動して吸収する。
+
+**Q: fixup で衝突（コンフリクト）が起きたらどうする？**
+
+A: 通常の rebase コンフリクトと同じ。手動修正 → `git add` → `git rebase --continue`。中止は `git rebase --abort`。fixup はなるべく早めに実行するとコンフリクトのリスクが減る。
