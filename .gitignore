@@ -1,19 +1,38 @@
-# Python
+# === Python ===
 __pycache__/
 *.pyc
 *.pyo
 .pytest_cache/
 *.egg-info/
 .venv/
+venv/
 
-# 環境変数（シークレット管理演習で使用）
+# === 環境変数・シークレット ===
 .env
+.env.*
+!.env.example
+credentials.json
+*.pem
+*.key
 
-# IDE
+# === IDE ===
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# OS
+# === OS ===
 Thumbs.db
 .DS_Store
+
+# === AI ツール ===
+.claude/
+.cursor/
+.copilot/
+.aider*
+
+# === ビルド・一時ファイル ===
+dist/
+build/
+*.tmp
 tmp_ruleset.json
