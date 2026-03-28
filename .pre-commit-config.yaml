@@ -1,0 +1,19 @@
+# Pre-commit 設定ファイル
+# git commit するたびに、以下のチェックが自動で走る
+
+repos:
+  # 基本的なチェック（pre-commit 公式が提供）
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # 末尾の余分な空白を除去
+      - id: trailing-whitespace
+      # ファイル末尾に改行があるか確認
+      - id: end-of-file-fixer
+      # YAML ファイルの構文チェック
+      - id: check-yaml
+      # 巨大ファイルの混入を防止（500KB以上）
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      # マージコンフリクトのマーカーが残っていないか
+      - id: check-merge-conflict
