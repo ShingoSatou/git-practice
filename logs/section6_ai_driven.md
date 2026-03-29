@@ -4,7 +4,7 @@
 
 - [Step 15: `.gitignore` の徹底管理](#step-15-gitignore-の徹底管理)（完了）
 - [Step 16: Git の履歴をきれいに保つ運用](#step-16-git-の履歴をきれいに保つ運用)（完了）
-- [Step 17: Issue 駆動開発](#step-17-issue-駆動開発)（未着手）
+- [Step 17: Issue 駆動開発](#step-17-issue-駆動開発)（完了）
 - [Step 18: モノレポ vs ポリレポ](#step-18-モノレポ-vs-ポリレポ)（未着手）
 - [Step 19: コードレビューの自動化](#step-19-コードレビューの自動化)（未着手）
 - [Step 20: Git Hooks + AI の組み合わせ](#step-20-git-hooks--ai-の組み合わせ)（未着手）
@@ -102,3 +102,41 @@ A: 有効。`rebase --autosquash` が fixup コミットを対象コミットの
 **Q: fixup で衝突（コンフリクト）が起きたらどうする？**
 
 A: 通常の rebase コンフリクトと同じ。手動修正 → `git add` → `git rebase --continue`。中止は `git rebase --abort`。fixup はなるべく早めに実行するとコンフリクトのリスクが減る。
+
+---
+
+## Step 17: Issue 駆動開発
+
+### 概要
+
+すべての作業を Issue（チケット）から始める開発スタイル。Issue → ブランチ → コード → PR → Issue 自動クローズの流れ。
+
+### 流れ
+
+1. `gh issue create` で Issue を作成
+2. `feature/#番号-説明` でブランチを作成
+3. コードを書いてコミット（メッセージに `#番号` を含める）
+4. PR を作成し、本文に `Closes #番号` と書く
+5. PR マージ時に Issue が自動クローズ
+
+### Issue 自動クローズのキーワード
+
+`Closes`, `Fixes`, `Resolves` + `#番号`（大文字小文字不問）
+
+### ブランチ命名規則
+
+| パターン | 用途 |
+|---------|------|
+| `feature/#番号-説明` | 新機能 |
+| `fix/#番号-説明` | バグ修正 |
+| `chore/#番号-説明` | 雑務 |
+
+### 実践
+
+- Issue #5「max関数を追加する」を作成
+- `feature/#5-add-max-value` ブランチで `max_value` 関数を実装
+- PR #6 を作成（`Closes #5` 付き）
+
+### AI駆動開発での位置づけ
+
+Issue に「やりたいこと」「完了条件」を書いておけば、AI がそれを指示書として受け取り、ブランチ作成 → 実装 → PR 作成まで自動で行える。
