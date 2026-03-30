@@ -1,0 +1,70 @@
+# AI コードレビュー — PR 作成時に AI が差分をレビューしてコメントする
+name: AI Code Review
+
+# いつ実行するか
+on:
+  pull_request:
+    types: [opened, synchronize]  # PR 作成時 & 新しいコミット push 時
+
+# 必要な権限
+permissions:
+  contents: read        # コードの読み取り
+  pull-requests: write  # PR へのコメント書き込み
+
+jobs:
+  review:
+    name: AI レビュー
+    runs-on: ubuntu-latest
+
+    steps:
+      # ① コードをチェックアウト（差分取得のため全履歴を取得）
+      - name: コードをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 全履歴（差分比較に必要）
+
+      # ② PR の差分を取得
+      - name: 差分を取得
+        id: diff
+        run: |
+          # マージ先ブランチとの差分を取得
+          DIFF=$(git diff origin/${{ github.base_ref }}...HEAD)
+          # GitHub Actions の出力に設定（複数行対応）
+          echo "diff<<EOF" >> $GITHUB_OUTPUT
+          echo "$DIFF" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # ③ AI API にレビューを依頼（例: Anthropic API）
+      - name: AI にレビューを依頼
+        id: review
+        run: |
+          # curl で Anthropic API を呼び出し
+          RESPONSE=$(curl -s https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "anthropic-version: 2023-06-01" \
+            -d '{
+              "model": "claude-sonnet-4-20250514",
+              "max_tokens": 1024,
+              "messages": [{
+                "role": "user",
+                "content": "以下のコード差分をレビューしてください。バグ、セキュリティ問題、改善点があれば指摘してください。\n\n```diff\n'"${{ steps.diff.outputs.diff }}"'\n```"
+              }]
+            }')
+          # レスポンスからテキストを抽出
+          REVIEW=$(echo "$RESPONSE" | jq -r '.content[0].text')
+          echo "review<<EOF" >> $GITHUB_OUTPUT
+          echo "$REVIEW" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # ④ レビュー結果を PR にコメント
+      - name: PR にコメント
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## AI Code Review\n\n${{ steps.review.outputs.review }}`
+            });
