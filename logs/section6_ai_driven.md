@@ -7,7 +7,7 @@
 - [Step 17: Issue 駆動開発](#step-17-issue-駆動開発)（完了）
 - [Step 18: モノレポ vs ポリレポ](#step-18-モノレポ-vs-ポリレポ)（完了）
 - [Step 19: コードレビューの自動化](#step-19-コードレビューの自動化)（完了）
-- [Step 20: Git Hooks + AI の組み合わせ](#step-20-git-hooks--ai-の組み合わせ)（未着手）
+- [Step 20: Git Hooks + AI の組み合わせ](#step-20-git-hooks--ai-の組み合わせ)（完了）
 
 ---
 
@@ -216,3 +216,50 @@ PR 作成時に GitHub Actions で AI にコードレビューさせる仕組み
 ### AI駆動開発での位置づけ
 
 AI レビューは人間のレビューの補助。AI が typo・バグ・セキュリティを先に潰し、人間は設計やビジネスロジックに集中できる。
+
+---
+
+## Step 20: Git Hooks + AI の組み合わせ
+
+### 概要
+
+Git Hooks に AI API 呼び出しを組み込み、コミット時に AI が自動でチェック・生成を行う仕組み。
+
+### パターン
+
+| パターン | フック | 動作 |
+|---------|--------|------|
+| コミットメッセージ自動生成 | `prepare-commit-msg` | 差分から AI がメッセージを生成 |
+| コード品質チェック | `pre-commit` | 変更内容にバグ・脆弱性がないか AI が確認 |
+| push 前レビュー | `pre-push` | ブランチ全体の差分を AI が確認 |
+
+### フックの共有方法
+
+`.git/hooks/` は Git に追跡されないため、`scripts/` に置いてリポジトリで共有する。
+
+| 方法 | 設定 |
+|------|------|
+| シンボリックリンク | `ln -s ../../scripts/hook.sh .git/hooks/hook` |
+| `core.hooksPath` | `git config core.hooksPath scripts/` |
+| pre-commit フレームワーク | `.pre-commit-config.yaml` で管理 |
+
+### 注意点
+
+- API 呼び出しでコミットが数秒遅くなる
+- API エラー時はブロックせずスキップする設計が重要
+- Haiku など高速・低コストなモデルを使う
+- API キーは環境変数で管理（フック内にハードコードしない）
+
+### 実践
+
+- `scripts/prepare-commit-msg.sh`: コミットメッセージ自動生成フック
+- `scripts/pre-commit-ai-check.sh`: コード品質チェックフック
+
+### AI チェックの全体像
+
+```
+コミット時（Hooks+AI） → push時（Hooks） → PR時（Actions+AI）
+即座にフィードバック      最終確認          詳細レビュー
+```
+
+Step 8（Hooks）、Step 19（Actions+AI）、Step 20 で開発フロー全段階に AI を組み込む方法が揃った。
