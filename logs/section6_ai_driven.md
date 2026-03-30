@@ -136,7 +136,14 @@ A: 通常の rebase コンフリクトと同じ。手動修正 → `git add` →
 - Issue #5「max関数を追加する」を作成
 - `feature/#5-add-max-value` ブランチで `max_value` 関数を実装
 - PR #6 を作成（`Closes #5` 付き）
+- PR #6 を Squash merge → Issue #5 が自動クローズされることを確認
 
 ### AI駆動開発での位置づけ
 
 Issue に「やりたいこと」「完了条件」を書いておけば、AI がそれを指示書として受け取り、ブランチ作成 → 実装 → PR 作成まで自動で行える。
+
+### Q&A
+
+**Q: Issue と PR の番号は共通か？**
+
+A: はい、GitHub では Issue と PR が同じ番号の連番を共有する。Issue #5 が使われたら次の PR は #6 になり、Issue #5 と PR #5 が同時に存在することはない。
