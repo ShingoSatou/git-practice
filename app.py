@@ -29,6 +29,11 @@ def divide(a: int, b: int) -> float:
     return a / b
 
 
+def max_value(a: int, b: int) -> int:
+    """2つの数値のうち大きい方を返す"""
+    return a if a >= b else b
+
+
 if __name__ == "__main__":
     print(greet("太郎"))
     print(f"1 + 2 = {add(1, 2)}")

@@ -48,7 +48,8 @@
 | `logs/section2_conflict_history.md` | コンフリクトと履歴管理（Step 4〜6） | Step 4〜6 の学習時 |
 | `logs/section3_cicd_automation.md` | CI/CDと自動化（Step 7〜9） | Step 7〜9 の学習時 |
 | `logs/section4_team_dev.md` | チーム開発（Step 10〜11） | Step 10〜11 の学習時 |
-| `logs/section5_ai_development.md` | AI駆動開発（Step 12〜14） | Step 12〜14 の学習時 |
+| `logs/section5_ai_development.md` | 応用（Step 13〜14） | Step 13〜14 の学習時 |
+| `logs/section6_ai_driven.md` | AI駆動開発（Step 15〜20） | Step 15〜20 の学習時 |
 
 ---
 
@@ -71,3 +72,9 @@
 | 12 | タグ・リリース | リポジトリ運用 |
 | 13 | GitHub CLI (`gh`) | 応用 |
 | 14 | `git bisect` バグ探し | 応用 |
+| 15 | `.gitignore` の徹底管理 | AI駆動開発 |
+| 16 | Git の履歴をきれいに保つ運用 | AI駆動開発 |
+| 17 | Issue 駆動開発 | AI駆動開発 |
+| 18 | モノレポ vs ポリレポ | AI駆動開発 |
+| 19 | コードレビューの自動化 | AI駆動開発 |
+| 20 | Git Hooks + AI の組み合わせ | AI駆動開発 |
