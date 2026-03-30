@@ -102,6 +102,7 @@ A: 有効。`rebase --autosquash` が fixup コミットを対象コミットの
 **Q: fixup で衝突（コンフリクト）が起きたらどうする？**
 
 A: 通常の rebase コンフリクトと同じ。手動修正 → `git add` → `git rebase --continue`。中止は `git rebase --abort`。fixup はなるべく早めに実行するとコンフリクトのリスクが減る。
+<<<<<<< HEAD
 
 ---
 
@@ -277,3 +278,5 @@ A: いいえ。`synchronize` トリガーにより、PR が開いている間に
 **Q: Draft PR 中はレビューをスキップしたい場合は？**
 
 A: トリガーに `ready_for_review` を追加し、Draft 解除時に初めてレビューを走らせることで API コストを抑えられる。
+=======
+>>>>>>> origin/main

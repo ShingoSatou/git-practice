@@ -1,7 +1,7 @@
 # === app.py のテスト ===
 # GitHub Actions（CI）演習で、自動テストとして実行します。
 
-from app import greet, add, multiply, subtract, divide
+from app import greet, add, multiply, subtract, divide, max_value
 
 
 def test_greet():
@@ -37,10 +37,18 @@ def test_divide():
         pass  # 期待通り
 
 
+def test_max_value():
+    assert max_value(3, 5) == 5
+    assert max_value(10, 2) == 10
+    assert max_value(4, 4) == 4
+    assert max_value(-1, -5) == -1
+
+
 if __name__ == "__main__":
     test_greet()
     test_add()
     test_multiply()
     test_subtract()
     test_divide()
+    test_max_value()
     print("全テスト合格！✅")
